@@ -8,11 +8,9 @@ const History = sequelize.define("history", {
   },
 });
 
-History.associate = (models) => {
-  History.hasMany(models.Details, {
-    onDelete: "cascade",
-  });
-};
+History.hasMany(models.Details, {
+  as: "details",
+});
 
 History.sync({ force: true })
   .then(() => {

@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize-cockroachdb");
 const sequelize = require("../config/connection");
+const History = require("./History");
 
 const Details = sequelize.define("details", {
   message: {
@@ -15,16 +16,17 @@ const Details = sequelize.define("details", {
     allowNull: false,
   },
   cost: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.STRING,
     allowNull: false,
   },
 });
 
-Details.associate = (models) => {
-  Details.belongsTo(models.History, {});
-};
+Details.belongsTo(History, {
+  foreignKey: "history_id",
+  as: "history",
+});
 
-Details.sync({ force: true })
+Details.sync({})
   .then(() => {
     console.log("Details table created");
   })
