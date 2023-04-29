@@ -1,6 +1,7 @@
 const { sentences, urls } = require("../models/Evaluation");
-const History = require("../models/History");
-const Details = require("../models/Details");
+const db = require("../models/index");
+const History = db.history;
+const Details = db.details;
 
 module.exports.eval_get = async (req, res) => {
   const user_id = req.query.user_id;
@@ -56,9 +57,11 @@ async function addNewExpense(test, type, amount, user_id) {
         time: new Date().toLocaleString(),
         cost: "$" + amount,
       };
-      Details.create({ ...newDetails, history_id: user_id }).then((details) => {
-        console.log(details);
-      });
+      Details.create({ ...newDetails, history_id: history.user_id }).then(
+        (details) => {
+          console.log(details);
+        }
+      );
 
       //   history.details.push(newDetails);
       //   history.save();
@@ -72,9 +75,11 @@ async function addNewExpense(test, type, amount, user_id) {
         }),
         cost: "$" + amount,
       };
-      Details.create({ ...newDetails, history_id: user_id }).then((details) => {
-        console.log(details);
-      });
+      Details.create({ ...newDetails, history_id: newHistory.user_id }).then(
+        (details) => {
+          console.log(details);
+        }
+      );
     }
   } catch (err) {
     console.log(err);

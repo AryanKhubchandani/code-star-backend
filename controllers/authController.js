@@ -1,4 +1,5 @@
-const User = require("../models/User");
+const db = require("../models/index");
+const User = db.user;
 const bcrypt = require("bcrypt");
 
 module.exports.signup_post = async (req, res) => {

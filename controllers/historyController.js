@@ -1,4 +1,6 @@
-const History = require("../models/History");
+// const History = require("../models/History");
+const db = require("../models/index");
+const History = db.history;
 
 module.exports.history_get = async (req, res) => {
   const user_id = req.params.user_id;

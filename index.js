@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const sequelize = require("./config/connection");
+const db = require("./models");
+
 const authRoutes = require("./routes/authRoutes");
 const historyRoutes = require("./routes/historyRoutes");
 const evalRoutes = require("./routes/evalRoutes");
@@ -16,6 +18,10 @@ sequelize
   .catch((error) => {
     console.error("Unable to connect to the database: ", error);
   });
+
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 // middleware
 app.use(express.json());
