@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const sequelize = require("./config/connection");
 const authRoutes = require("./routes/authRoutes");
+const historyRoutes = require("./routes/historyRoutes");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 // routes
 app.use(authRoutes);
+app.use(historyRoutes);
 
 app.listen(process.env.port || 3000, function () {
   console.log("Listening for request on port", process.env.port || 3000);
