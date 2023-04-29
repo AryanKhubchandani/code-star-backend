@@ -7,11 +7,11 @@ module.exports.history_get = async (req, res) => {
       user_id,
     });
     if (!historyInstance) {
-      err = "No Expense History found";
-      console.log(err);
-      return res.sendStatus(404).send(err);
+      error = "No Expense History found";
+      console.log(error);
+      return res.status(404).send(error);
     } else {
-      res.send({
+      return res.send({
         history: historyInstance.details,
       });
     }
