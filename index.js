@@ -6,6 +6,7 @@ const db = require("./models");
 const authRoutes = require("./routes/authRoutes");
 const historyRoutes = require("./routes/historyRoutes");
 const evalRoutes = require("./routes/evalRoutes");
+const audioRoutes = require("./routes/audioRoutes");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(authRoutes);
 app.use(historyRoutes);
 app.use(evalRoutes);
+app.use(audioRoutes);
 
 app.listen(process.env.port || 3000, function () {
   console.log("Listening for request on port", process.env.port || 3000);
