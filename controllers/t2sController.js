@@ -6,6 +6,13 @@ const User = db.user;
 const Audio = db.audio;
 const Details = db.details;
 
+const [
+  createNewUserFx,
+  createNewAudioFileFx,
+  evaluateYourselfFx,
+  getBalanceFx,
+] = require("../../scripts/contract");
+
 module.exports.synthAudio = async (req, res) => {
   const user_id = req.body.user_id;
   const name = req.body.name;
@@ -48,7 +55,8 @@ module.exports.synthAudio = async (req, res) => {
       action: "read",
       expires: "03-17-2099",
     })
-    .then((val) => {
+    .then(async (val) => {
+      createNewAudioFileFx(user_id);
       addAudio(user_id, name, time, val[0]);
     });
 

@@ -2,6 +2,13 @@ const db = require("../models/index");
 const User = db.user;
 const bcrypt = require("bcrypt");
 
+const [
+  createNewUserFx,
+  createNewAudioFileFx,
+  evaluateYourselfFx,
+  getBalanceFx,
+] = require("../../scripts/contract");
+
 module.exports.signup_post = async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -14,7 +21,8 @@ module.exports.signup_post = async (req, res) => {
           password: hash,
         });
       })
-      .then((newUser) => {
+      .then(async (newUser) => {
+        await createNewUserFx(newUser.id);
         console.log(newUser.toJSON());
         return res.status(201).json({ user: newUser.id });
       });

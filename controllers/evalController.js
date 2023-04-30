@@ -3,11 +3,19 @@ const db = require("../models/index");
 const User = db.user;
 const Details = db.details;
 
+const [
+  createNewUserFx,
+  createNewAudioFileFx,
+  evaluateYourselfFx,
+  getBalanceFx,
+] = require("../../scripts/contract");
+
 module.exports.eval_get = async (req, res) => {
   const user_id = req.query.user_id;
   const type = req.query.type;
   try {
     addNewExpense(type, "Expense", 20, user_id);
+    await evaluateYourselfFx(user_id);
     console.log("Added new expense");
   } catch (err) {
     console.log(err);

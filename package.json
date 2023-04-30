@@ -18,5 +18,10 @@
     "express": "^4.18.2",
     "sequelize": "^6.31.0",
     "sequelize-cockroachdb": "^6.0.5"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.14.0"
   }
 }

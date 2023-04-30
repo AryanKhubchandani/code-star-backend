@@ -1,3 +1,5 @@
 .env
 pizza100-358205-633824a250a6.json
 node_modules
+artifacts
+cache
