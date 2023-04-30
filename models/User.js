@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const Audio = require("./Audio");
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define("users", {
+  const User = sequelize.define("user", {
     username: {
       type: Sequelize.STRING,
       allowNull: false,
