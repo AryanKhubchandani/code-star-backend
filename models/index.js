@@ -8,16 +8,15 @@ db.sequelize = sequelize;
 
 db.user = require("./User")(sequelize, Sequelize);
 db.audio = require("./Audio")(sequelize, Sequelize);
-db.history = require("./History")(sequelize, Sequelize);
 db.details = require("./Details")(sequelize, Sequelize);
 
-db.history.hasMany(db.details, {
+db.user.hasMany(db.user, {
   as: "details",
 });
 
-db.details.belongsTo(db.history, {
-  foreignKey: "history_id",
-  as: "history",
+db.details.belongsTo(db.user, {
+  foreignKey: "user_id",
+  as: "user",
 });
 
 db.user.hasMany(db.audio, {
@@ -25,7 +24,7 @@ db.user.hasMany(db.audio, {
 });
 
 db.audio.belongsTo(db.details, {
-  foreignKey: "user_id",
+  foreignKey: "audio_user_id",
   as: "user",
 });
 
