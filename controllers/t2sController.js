@@ -2,8 +2,8 @@ const t2sClient = require("../config/t2sClient");
 const t2sBucket = require("../config/t2sBucket");
 
 const db = require("../models/index");
+const User = db.user;
 const Audio = db.audio;
-const History = db.history;
 const Details = db.details;
 
 module.exports.synthAudio = async (req, res) => {
@@ -57,34 +57,35 @@ module.exports.synthAudio = async (req, res) => {
 
 module.exports.getAudio = async (req, res) => {
   const user_id = req.query.user_id;
-  const audiofiles = await Audio.findOne({ user_id });
-  if (!audiofiles)
+  const user = await User.findOne({ where: { id: user_id } });
+  const audiofiles = await Audio.findAll({ fk_user_id: user.id });
+  if (audiofiles.length == 0 || !audiofiles)
     return res.send({
       message: "No files found",
     });
   else {
     res.send({
-      audioFiles: audiofiles.audioDetails,
+      audioFiles: audiofiles,
     });
   }
 };
 
-async function addAudio(_user_id, _name, _time, _url) {
-  const audioFile = Audio.create({
-    user_id: _user_id,
-    name: _name,
-    download_url: _url,
-    time: _time,
+async function addAudio(user_id, name, time, url) {
+  const user = await User.findOne({ where: { id: user_id } });
+  Audio.create({
+    name: name,
+    download_url: url,
+    time: time,
+    fk_user_id: user.id,
   })
-    .then(() => {
-      audio_id = audioFile.id;
-      console.log("Audio file created: ", audioFile);
+    .then((audio) => {
+      console.log("Audio file created: ", audio);
     })
     .catch((error) => {
       console.log(error.message);
     });
   try {
-    await addNewExpense(_name, "Expense", 50, _user_id);
+    await addNewExpense(name, "Expense", 50, user_id);
   } catch (e) {
     console.log(e.message);
   }
@@ -92,20 +93,20 @@ async function addAudio(_user_id, _name, _time, _url) {
 
 async function addNewExpense(name, typeOf, amount, user_id) {
   const amt = Number(amount);
-  const historyInstance = await History.findOne({
-    user_id,
-  });
-  var newHistory = History.create({
-    user_id: user_id,
-  }).then(() => {
+  const user = await User.findOne({ where: { id: user_id } });
+  if (user) {
     Details.create({
       message: `Created new Audiobook: ${name}`,
       type: typeOf,
-      time: Date.now().toLocaleString("en-us", {
+      time: new Date().toLocaleString("en-us", {
         timeZone: "IST",
       }),
       cost: amt,
-      history_id: newHistory.user_id,
+      user_id: user.id,
+    }).then((details) => {
+      console.log("Added new expense: ", details);
     });
-  });
+  } else {
+    console.log("User not found");
+  }
 }

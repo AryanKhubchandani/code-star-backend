@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize-cockroachdb");
 const sequelize = require("../config/connection");
-const Users = require("./User");
 
 module.exports = (sequelize, DataTypes) => {
   const Audio = sequelize.define("audio", {
@@ -9,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     download_url: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     time: {

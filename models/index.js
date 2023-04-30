@@ -24,7 +24,7 @@ db.user.hasMany(db.audio, {
 });
 
 db.audio.belongsTo(db.details, {
-  foreignKey: "audio_user_id",
+  foreignKey: "fk_user_id",
   as: "user",
 });
 

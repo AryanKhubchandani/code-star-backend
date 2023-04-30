@@ -50,7 +50,7 @@ async function addNewExpense(test, typeOf, amount, user_id) {
         message: `Attempted ${test} test`,
         type: typeOf,
         time: new Date().toLocaleString(),
-        cost: "$" + amount,
+        cost: "$" + amt,
       };
       Details.create({ ...newDetails, user_id: user.id }).then((details) => {
         console.log(details);
