@@ -7,6 +7,9 @@ This repository contains the backend code for the Code:Star app, which aims to e
   <img alt="Node.js" src="https://img.shields.io/badge/Stack-Node.js-brightgreen?style=for-the-badge" />
 </p>
 
+## Frontend 
+[Code_Star](https://github.com/Calladrus2001/Code_Star)
+
 ## Getting Started
 ### Prerequisites
 Before running the app, you will need to have the following installed on your system:
